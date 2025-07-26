@@ -1,0 +1,14 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Open Extension in Chrome",
+      "type": "shell",
+      "command": "echo",
+      "args": [
+        "Load the extension by:\n1. Open Chrome\n2. Go to chrome://extensions/\n3. Enable Developer mode\n4. Click 'Load unpacked'\n5. Select this folder"
+      ],
+      "group": "build"
+    }
+  ]
+}

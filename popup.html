@@ -1,20 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
   <title>Lorem Ipsum Generator</title>
 </head>
+
 <body>
-  <h1>Lorem Ipsum Generator</h1>
-  <label for="num-paragraphs">Paragraphs:</label>
-  <input type="number" id="num-paragraphs" min="1" value="3">
-  <label for="num-sentences">Sentences:</label>
-  <input type="number" id="num-sentences" min="1" value="5">
-  <button id="generate-btn">Generate Text</button>
-  <button id="copy-btn">Copy Text</button>
-  <div id="lorem-text"></div>
+  <div class="container">
+    <div class="header">
+      <h1 class="title">Lorem Ipsum Generator</h1>
+    </div>
+
+    <div class="controls">
+      <div class="input-group">
+        <label for="num-paragraphs" class="label">Paragraphs</label>
+        <input type="number" id="num-paragraphs" class="input" min="1" max="20" value="3">
+      </div>
+
+      <div class="input-group">
+        <label for="num-sentences" class="label">Sentences</label>
+        <input type="number" id="num-sentences" class="input" min="1" max="15" value="5">
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="generate-btn" class="btn btn-primary">
+        <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2">
+          <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+          <polyline points="14,2 14,8 20,8" />
+          <line x1="16" y1="13" x2="8" y2="13" />
+          <line x1="16" y1="17" x2="8" y2="17" />
+          <polyline points="10,9 9,9 8,9" />
+        </svg>
+        Generate
+      </button>
+      <button id="copy-btn" class="btn btn-secondary">
+        <svg class="btn-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+          <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+        </svg>
+        Copy
+      </button>
+    </div>
+
+    <div class="output">
+      <div class="output-header">
+        <span class="output-label">Generated Text</span>
+        <div class="output-actions">
+          <button id="word-count" class="word-count">0 words</button>
+        </div>
+      </div>
+      <div id="lorem-text" class="output-content"></div>
+    </div>
+  </div>
+
   <script src="popup.js"></script>
 </body>
+
 </html>

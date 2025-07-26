@@ -1,7 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Lorem Ipsum Generator",
-  "version": "1.0",
+  "version": "2.0",
+  "description": "Generate beautiful placeholder text with a modern, clean interface. Perfect for designers and developers.",
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
