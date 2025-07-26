@@ -98,14 +98,41 @@ function generateParagraph(numSentences) {
   return sentences.join(" ");
 }
 
-function generateLoremIpsum(numParagraphs, numSentences) {
+function generateLoremIpsum(numParagraphs, numSentences, maxWords = null) {
   const paragraphs = [];
+  let totalWords = 0;
 
   for (let i = 0; i < numParagraphs; i++) {
-    paragraphs.push(generateParagraph(numSentences));
+    const paragraph = generateParagraph(numSentences);
+    const paragraphWords = countWords(paragraph);
+
+    if (maxWords && totalWords + paragraphWords > maxWords) {
+      // If adding this paragraph would exceed max words, truncate it
+      const remainingWords = maxWords - totalWords;
+      if (remainingWords > 0) {
+        const truncatedParagraph = truncateToWords(paragraph, remainingWords);
+        paragraphs.push(truncatedParagraph);
+      }
+      break;
+    }
+
+    paragraphs.push(paragraph);
+    totalWords += paragraphWords;
+
+    if (maxWords && totalWords >= maxWords) {
+      break;
+    }
   }
 
   return paragraphs.join("\n\n");
+}
+
+function truncateToWords(text, maxWords) {
+  const words = text.split(/\s+/);
+  if (words.length <= maxWords) {
+    return text;
+  }
+  return words.slice(0, maxWords).join(" ") + ".";
 }
 
 function countWords(text) {
@@ -135,6 +162,8 @@ function updateLoremIpsum() {
     const numSentences = parseInt(
       document.getElementById("num-sentences").value
     );
+    const maxWordsValue = document.getElementById("max-words").value;
+    const maxWords = maxWordsValue ? parseInt(maxWordsValue) : null;
 
     // Validate inputs
     if (numParagraphs < 1 || numParagraphs > 20) {
@@ -149,7 +178,15 @@ function updateLoremIpsum() {
       return;
     }
 
-    const loremText = generateLoremIpsum(numParagraphs, numSentences);
+    if (maxWords !== null && (maxWords < 50 || maxWords > 1000)) {
+      alert(
+        "Please enter a max words value between 50 and 1000, or leave empty for no limit"
+      );
+      generateBtn.classList.remove("generating");
+      return;
+    }
+
+    const loremText = generateLoremIpsum(numParagraphs, numSentences, maxWords);
     document.getElementById("lorem-text").textContent = loremText;
     updateWordCount(loremText);
 
@@ -220,6 +257,15 @@ document
     if (value > 15) e.target.value = 15;
     if (value < 1) e.target.value = 1;
   });
+
+document.getElementById("max-words").addEventListener("input", function (e) {
+  const value = e.target.value;
+  if (value !== "" && value !== null) {
+    const numValue = parseInt(value);
+    if (numValue > 1000) e.target.value = 1000;
+    if (numValue < 50) e.target.value = 50;
+  }
+});
 
 // Add keyboard shortcuts
 document.addEventListener("keydown", function (e) {
